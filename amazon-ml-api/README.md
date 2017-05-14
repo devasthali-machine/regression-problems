@@ -27,7 +27,7 @@ aws s3api put-object --bucket samsa-repo --key banking-batch.csv --body dataset/
 ```
 
 
-2 - create Training Datasource
+2 - [create Training Datasource](http://docs.aws.amazon.com/machine-learning/latest/dg/step-2-create-a-datasource.html)
 -----------------------------
 
 - provides schema of dataset  (Numeric, Text, Categorical, or Binary)
@@ -139,7 +139,7 @@ aws s3api put-object --bucket samsa-repo --key banking-batch.csv --body dataset/
 aws machinelearning create-data-source-from-s3
 ```
 
-3 - create ml-model
+3 - [create ml-model](http://docs.aws.amazon.com/machine-learning/latest/dg/step-3-create-an-ml-model.html)
 --------------------
 
 - use Training datasource to create an ML model, 
@@ -148,6 +148,24 @@ aws machinelearning create-data-source-from-s3
 
 _ML model is a collection of patterns that ML API finds in dataset during training.
 So, ML model is used to create the predictions._
+
+[Types of ML Models](http://docs.aws.amazon.com/machine-learning/latest/dg/types-of-ml-models.html)
+---
+
+The type of model depends on the type of target that to predict.
+
+* [binary classification](http://docs.aws.amazon.com/machine-learning/latest/dg/binary-classification.html) (Y/N)
+  eg. "Will the customer buy this product?"
+  ML uses the industry-standard learning algorithm known as logistic regression.
+
+* multiclass classification, and 
+  "Is this movie a romantic comedy, documentary, or thriller?"
+   ML uses the industry-standard learning algorithm known as multinomial logistic regression.
+
+* regression
+  "What will the temperature be in Seattle tomorrow?"
+  ML uses the industry-standard learning algorithm known as linear regression.
+  ML models for regression problems predict a numeric value.
 
 ```
 aws machinelearning get-ml-model --ml-model-id ml-GvRXIrHDhLi --region us-east-1 --profile aws-federated
@@ -182,3 +200,12 @@ ML API :
 one containing the remaining 30%
 - Trains the ML model on the section that contains 70% of the input data
 - Evaluates the model using the remaining 30% of the input data
+
+
+Refs
+----
+
+http://docs.aws.amazon.com/machine-learning/latest/dg/tutorial.html
+
+http://docs.aws.amazon.com/machine-learning/latest/dg/evaluating_models.html
+
