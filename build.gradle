@@ -1,0 +1,36 @@
+plugins {
+    id 'java'
+    id 'maven-publish'
+}
+
+sourceCompatibility = 12
+targetCompatibility = 12
+
+dependencies {
+    compileOnly 'org.projectlombok:lombok:1.18.28'
+    annotationProcessor 'org.projectlombok:lombok:1.18.28'
+
+    implementation 'com.opencsv:opencsv:4.1'
+
+    implementation group: 'org.apache.commons', name: 'commons-math3', version: '3.6.1'
+    implementation group: 'ai.djl', name: 'api', version: '0.22.1'
+    implementation "org.apache.logging.log4j:log4j-slf4j-impl:2.17.1"
+    implementation platform("ai.djl:bom:0.22.1")
+    implementation "ai.djl:api"
+    implementation group: 'ai.djl.timeseries', name: 'timeseries', version: '0.22.1'
+    runtimeOnly "ai.djl.mxnet:mxnet-engine"
+    runtimeOnly "ai.djl.mxnet:mxnet-model-zoo"
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            from components.java
+        }
+    }
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+}
