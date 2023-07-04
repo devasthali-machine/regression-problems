@@ -1,7 +1,13 @@
 import com.opencsv.CSVReader;
 import com.talkot.model.AdMetrics;
+import java.io.BufferedWriter;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStreamWriter;
+import java.io.Writer;
+import java.nio.charset.StandardCharsets;
 import java.util.LinkedList;
 import java.util.List;
 import org.apache.commons.math3.stat.regression.SimpleRegression;
@@ -14,7 +20,7 @@ public class AdClickLinearRegression {
         double[][] encodedData = new double[adMetricsData.size()][2];
         int row = 0;
 
-        for (AdMetrics a: adMetricsData) {
+        for (AdMetrics a : adMetricsData) {
             encodedData[row][0] = a.getId();
             encodedData[row][1] = a.getImpressions();
             row++;
@@ -33,9 +39,20 @@ public class AdClickLinearRegression {
         System.out.println("slope = " + simpleRegression.getSlope());
         System.out.println("bias term = " + simpleRegression.getIntercept());
 
-        for (int i = 152; i < 152 + 30; i++) {
-            System.out.println(i + " : " + simpleRegression.predict(i));
+        try (Writer writer = getBufferedWriter("src/main/resources/ad_click_data_predictions.csv")) {
+            for (int i = 152; i < 152 + 32; i++) {
+                Double predictionValue = simpleRegression.predict(i);
+                String v = String.format("%f", predictionValue);
+                System.out.println(i + " : " + predictionValue.longValue());
+                writer.write(i + "," + predictionValue.longValue());
+                writer.write("\n");
+            }
         }
+    }
+
+    private static BufferedWriter getBufferedWriter(String file) throws FileNotFoundException {
+        return new BufferedWriter(new OutputStreamWriter(
+            new FileOutputStream(file), StandardCharsets.UTF_8));
     }
 
     private static List<AdMetrics> getAdMetrics() throws IOException {

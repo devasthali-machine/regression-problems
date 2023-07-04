@@ -6,6 +6,8 @@ pip install matplotlib
 python plot-ad-clicks.py
 ```
 
+![](ad-click-forecasting.png)
+
 Resources
 ---------
 
